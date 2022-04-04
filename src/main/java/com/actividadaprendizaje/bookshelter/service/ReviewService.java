@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ReviewService {
 
-    void addReview(User user, Book book, float review);
+    boolean addReview(Review review);
     List<Review> findByUser(User user);
     List<Review> findAllReviews();
     List<Review> findPurchases(User user);

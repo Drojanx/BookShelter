@@ -1,9 +1,10 @@
-package com.actividadaprendizaje.bookshelter.service;
+package com.actividadaprendizaje.bookshelter.service.impl;
 
 import com.actividadaprendizaje.bookshelter.domain.Book;
 import com.actividadaprendizaje.bookshelter.domain.User;
 import com.actividadaprendizaje.bookshelter.exception.BookNotFoundException;
 import com.actividadaprendizaje.bookshelter.repository.BookRepository;
+import com.actividadaprendizaje.bookshelter.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.actividadaprendizaje.bookshelter.repository.PurchaseRepository;
@@ -11,7 +12,7 @@ import com.actividadaprendizaje.bookshelter.repository.PurchaseRepository;
 import java.util.List;
 
 @Service
-public class BookServiceImpl implements BookService{
+public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;

@@ -1,7 +1,12 @@
 package com.actividadaprendizaje.bookshelter.controller;
 
+import com.actividadaprendizaje.bookshelter.domain.Book;
+import com.actividadaprendizaje.bookshelter.domain.Purchase;
 import com.actividadaprendizaje.bookshelter.domain.User;
+import com.actividadaprendizaje.bookshelter.exception.UserModificationException;
 import com.actividadaprendizaje.bookshelter.exception.UserRegistrationException;
+import com.actividadaprendizaje.bookshelter.service.BookService;
+import com.actividadaprendizaje.bookshelter.service.PurchaseService;
 import com.actividadaprendizaje.bookshelter.service.UserService;
 import com.actividadaprendizaje.bookshelter.service.FileService;
 import org.hibernate.exception.ConstraintViolationException;
@@ -16,6 +21,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -24,7 +31,10 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private BookService bookService;
+    @Autowired
+    private PurchaseService purchaseService;
     @Autowired
     private FileService fileService;
 
@@ -53,13 +63,25 @@ public class UserController {
     public String profile(Model model, HttpServletRequest request) {
         String remoteUsername = request.getRemoteUser();
         User remoteUser = userService.findByUsername(remoteUsername);
+        List<Purchase> purchaseList = purchaseService.findPurchases(remoteUser);
+        List<Book> myBooks = new ArrayList<>();
+        for(Purchase purchase : purchaseList){
+            myBooks.add(purchase.getBook());
+        }
         model.addAttribute("user", remoteUser);
+        model.addAttribute("myBooks", myBooks);
         return "profile";
     }
 
-    @PostMapping("/user-image")
-    public String setUserImage(@RequestParam("image") MultipartFile imageFile) {
-        fileService.uploadFile(imageFile);
+    @PostMapping("/profile/update")
+    public String changeUserData(@ModelAttribute("userModify") User formUser, HttpServletRequest request, Model model) throws UserModificationException {
+        String remoteUsername = request.getRemoteUser();
+        User remoteUser = userService.findByUsername(remoteUsername);
+        boolean userModified = userService.modifyUser(remoteUser, formUser);
+        if (!userModified){
+            throw new UserModificationException("Error al modificar el usuario");
+        }
+        model.addAttribute("user", remoteUser);
         return "redirect:/profile";
     }
 
