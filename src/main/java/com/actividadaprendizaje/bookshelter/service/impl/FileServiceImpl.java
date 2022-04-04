@@ -1,4 +1,4 @@
-package com.actividadaprendizaje.bookshelter.service;
+package com.actividadaprendizaje.bookshelter.service.impl;
 
 import com.actividadaprendizaje.bookshelter.service.FileService;
 import org.springframework.beans.factory.annotation.Value;

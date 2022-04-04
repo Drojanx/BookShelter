@@ -1,4 +1,4 @@
-package com.actividadaprendizaje.bookshelter.service;
+package com.actividadaprendizaje.bookshelter.service.impl;
 
 import com.actividadaprendizaje.bookshelter.domain.Book;
 import com.actividadaprendizaje.bookshelter.domain.Purchase;
@@ -6,25 +6,29 @@ import com.actividadaprendizaje.bookshelter.domain.Review;
 import com.actividadaprendizaje.bookshelter.domain.User;
 import com.actividadaprendizaje.bookshelter.repository.PurchaseRepository;
 import com.actividadaprendizaje.bookshelter.repository.ReviewRepository;
+import com.actividadaprendizaje.bookshelter.service.ReviewService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Service
-public class ReviewServiceImpl implements ReviewService{
+public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
     private ReviewRepository reviewRepository;
 
     @Override
-    public void addReview(User user, Book book, float stars) {
-        Review review = new Review();
-        review.setUser(user);
-        review.setStars(stars);
-        review.setBook(book);
-        reviewRepository.save(review);
+    public boolean addReview(Review review) {
+        try{
+            review.setCreationDate(LocalDate.now());
+            reviewRepository.save(review);
+        } catch (DataIntegrityViolationException ex){
+            return false;
+        }
+        return true;
     }
 
     @Override
