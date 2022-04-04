@@ -39,6 +39,7 @@ public class Book {
 
 
 
+
     @OneToMany(mappedBy = "book")
     private List<Purchase> purchases;
     @OneToMany(mappedBy = "book")

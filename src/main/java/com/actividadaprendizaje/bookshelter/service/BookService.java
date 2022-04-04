@@ -1,6 +1,7 @@
 package com.actividadaprendizaje.bookshelter.service;
 
 import com.actividadaprendizaje.bookshelter.domain.Book;
+import com.actividadaprendizaje.bookshelter.domain.User;
 import com.actividadaprendizaje.bookshelter.exception.BookNotFoundException;
 
 import java.util.List;

@@ -1,9 +1,8 @@
-<div th:include="fragments/head"></div>
-<link th:href="@{/css/catalog.css}" rel="stylesheet"/>
+<div th:replace="fragments/head"></div>
 </head>
 
 <body class="d-flex h-100 text-center">
-    <div class="container-fluid d-flex flex-column" >
+    <div class="container-fluid d-flex flex-column px-0" >
 
         <div th:replace="fragments/header.html" :: header xmlns:th="http://www.w3.org/1999/xhtml"></div>
 

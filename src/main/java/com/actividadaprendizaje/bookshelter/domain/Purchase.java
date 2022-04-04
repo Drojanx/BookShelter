@@ -10,7 +10,10 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Entity(name = "purchases")
+@Entity
+@Table(name = "purchases",
+        uniqueConstraints = { @UniqueConstraint(columnNames = //Un libro solo se puede comprar una vez por usuario
+                { "user_id", "book_id" }) })
 public class Purchase {
 
     @Id

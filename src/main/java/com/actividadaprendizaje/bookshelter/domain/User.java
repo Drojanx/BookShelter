@@ -48,6 +48,17 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     List<Purchase> purchases;
+
+    public void addPurchaseToUser(Purchase purchase) {
+        purchases.add(purchase);
+        purchase.setUser(this);
+    }
+
     @OneToMany(mappedBy = "user")
     List<Review> reviews;
+
+    public void addReviewToUser(Review review) {
+        reviews.add(review);
+        review.setUser(this);
+    }
 }

@@ -2,15 +2,21 @@ package com.actividadaprendizaje.bookshelter.controller;
 
 
 import com.actividadaprendizaje.bookshelter.domain.Book;
+import com.actividadaprendizaje.bookshelter.domain.Purchase;
+import com.actividadaprendizaje.bookshelter.domain.User;
 import com.actividadaprendizaje.bookshelter.exception.BookNotFoundException;
 import com.actividadaprendizaje.bookshelter.service.BookService;
+import com.actividadaprendizaje.bookshelter.service.PurchaseService;
+import com.actividadaprendizaje.bookshelter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -18,6 +24,10 @@ public class WebController {
 
     @Autowired
     private BookService bookService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private PurchaseService purchaseService;
 
     @GetMapping(value = "/")
     public String index(Model model) {
@@ -45,9 +55,13 @@ public class WebController {
     }
 
     @GetMapping(value = "/book/{id}")
-    public String product(Model model, @PathVariable long id) throws BookNotFoundException {
+    public String product(Model model, HttpServletRequest request, @PathVariable long id, @RequestParam(value="justbought", required = false, defaultValue = "false") String justbought) throws BookNotFoundException {
+        String remoteUsername = request.getRemoteUser();
+        User remoteUser = userService.findByUsername(remoteUsername);
         Book book = bookService.findBook(id);
+        boolean purchased = purchaseService.findPurchaseByUserAndBook(remoteUser, book);
         model.addAttribute("book", book);
+        model.addAttribute("purchased", purchased);
         return "book";
     }
 

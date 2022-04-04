@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface PurchaseService {
 
-    void addPurchase(Book book, User user);
+    boolean addPurchase(Book book, User user);
     List<Purchase> findPurchases(User user);
+    boolean findPurchaseByUserAndBook(User user, Book book);
 }
