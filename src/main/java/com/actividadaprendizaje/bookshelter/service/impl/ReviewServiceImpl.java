@@ -32,8 +32,26 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
+    public boolean modifyReview(Review review, Review formReview) {
+        try{
+            review.setComment(formReview.getComment());
+            review.setStars(formReview.getStars());
+            review.setPublished(formReview.isPublished());
+            reviewRepository.save(review);
+        } catch (DataIntegrityViolationException ex){
+            return false;
+        }
+        return true;
+    }
+
+    @Override
     public List<Review> findByUser(User user) {
         return reviewRepository.findByUser(user);
+    }
+
+    @Override
+    public List<Review> findByBook(Book book) {
+        return reviewRepository.findByBook(book);
     }
 
     @Override
@@ -45,4 +63,11 @@ public class ReviewServiceImpl implements ReviewService {
     public List<Review> findPurchases(User user) {
         return null;
     }
+
+    @Override
+    public Review findByUserAndBook(User user, Book book) {
+        return reviewRepository.findByUserAndBook(user, book);
+    }
+
+
 }
