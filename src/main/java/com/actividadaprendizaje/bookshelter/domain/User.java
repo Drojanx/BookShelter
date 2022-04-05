@@ -61,4 +61,9 @@ public class User {
         reviews.add(review);
         review.setUser(this);
     }
+
+    @Override
+    public String toString() {
+        return username + '-' + name + ' ' + surname;
+    }
 }
