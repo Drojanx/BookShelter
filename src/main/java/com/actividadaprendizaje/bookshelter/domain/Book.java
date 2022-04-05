@@ -31,14 +31,19 @@ public class Book {
     @Column
     public float getAvgReview(){
         float sumReviews = 0;
+        int numOfPublished = 0;
         for (Review review : reviews){
-            sumReviews += review.getStars();
+            if(review.isPublished())
+                numOfPublished++;
+                sumReviews += review.getStars();
         }
-        return sumReviews;
+        return sumReviews/numOfPublished;
     }
 
-
-
+    @Override
+    public String toString() {
+        return name + '-' + author;
+    }
 
     @OneToMany(mappedBy = "book")
     private List<Purchase> purchases;

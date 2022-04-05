@@ -3,10 +3,12 @@ package com.actividadaprendizaje.bookshelter.controller;
 
 import com.actividadaprendizaje.bookshelter.domain.Book;
 import com.actividadaprendizaje.bookshelter.domain.Purchase;
+import com.actividadaprendizaje.bookshelter.domain.Review;
 import com.actividadaprendizaje.bookshelter.domain.User;
 import com.actividadaprendizaje.bookshelter.exception.BookNotFoundException;
 import com.actividadaprendizaje.bookshelter.service.BookService;
 import com.actividadaprendizaje.bookshelter.service.PurchaseService;
+import com.actividadaprendizaje.bookshelter.service.ReviewService;
 import com.actividadaprendizaje.bookshelter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,8 @@ public class WebController {
     private UserService userService;
     @Autowired
     private PurchaseService purchaseService;
+    @Autowired
+    private ReviewService reviewService;
 
     @GetMapping(value = "/")
     public String index(Model model) {
@@ -60,7 +64,9 @@ public class WebController {
         User remoteUser = userService.findByUsername(remoteUsername);
         Book book = bookService.findBook(id);
         boolean purchased = purchaseService.findPurchaseByUserAndBook(remoteUser, book);
+        List<Review> reviews = reviewService.findByBook(book);
         model.addAttribute("book", book);
+        model.addAttribute("reviews", reviews);
         model.addAttribute("purchased", purchased);
         return "book";
     }

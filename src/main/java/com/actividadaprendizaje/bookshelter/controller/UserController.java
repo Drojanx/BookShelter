@@ -2,6 +2,7 @@ package com.actividadaprendizaje.bookshelter.controller;
 
 import com.actividadaprendizaje.bookshelter.domain.Book;
 import com.actividadaprendizaje.bookshelter.domain.Purchase;
+import com.actividadaprendizaje.bookshelter.domain.Review;
 import com.actividadaprendizaje.bookshelter.domain.User;
 import com.actividadaprendizaje.bookshelter.exception.UserModificationException;
 import com.actividadaprendizaje.bookshelter.exception.UserRegistrationException;
@@ -63,12 +64,14 @@ public class UserController {
     public String profile(Model model, HttpServletRequest request) {
         String remoteUsername = request.getRemoteUser();
         User remoteUser = userService.findByUsername(remoteUsername);
+        Review review = new Review();
         List<Purchase> purchaseList = purchaseService.findPurchases(remoteUser);
         List<Book> myBooks = new ArrayList<>();
         for(Purchase purchase : purchaseList){
             myBooks.add(purchase.getBook());
         }
         model.addAttribute("user", remoteUser);
+        model.addAttribute("review", review);
         model.addAttribute("myBooks", myBooks);
         return "profile";
     }
