@@ -19,7 +19,7 @@ import java.nio.file.StandardCopyOption;
 public class FileServiceImpl implements FileService {
 
     @Value("${images.upload.dir}")
-    private String uploadDir;
+    public String uploadDir;
 
     @Override
     public void uploadFile(MultipartFile file) {
