@@ -15,4 +15,6 @@ public interface BookService {
 
     void addBook(Book book);
     void addBooks(Book... books);
+
+    List<String> allCategories();
 }

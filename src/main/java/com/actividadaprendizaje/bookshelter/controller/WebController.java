@@ -13,10 +13,7 @@ import com.actividadaprendizaje.bookshelter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -44,7 +41,11 @@ public class WebController {
     @GetMapping(value = "/catalog")
     public String catalog(Model model) {
         List<Book> allBooks = bookService.findAllBooks();
+        List<String> allCategories = bookService.allCategories();
+        Book book = new Book();
+        model.addAttribute("book", book);
         model.addAttribute("books", allBooks);
+        model.addAttribute("categories", allCategories);
         model.addAttribute("categoryList", false);
         return "catalog";
     }
@@ -52,10 +53,20 @@ public class WebController {
     @GetMapping(value = "/catalog/{categoryName}")
     public String productsByCategory(Model model, @PathVariable String categoryName) {
         List<Book> categoryBooks = bookService.findByCategory(categoryName);
+        List<String> allCategories = bookService.allCategories();
+        Book book = new Book();
+        model.addAttribute("book", book);
         model.addAttribute("books", categoryBooks);
+        model.addAttribute("categories", allCategories);
         model.addAttribute("categoryList", true);
         model.addAttribute("category", categoryName);
         return "catalog";
+    }
+
+    @GetMapping(value = "/filter")
+    public String productsFiltered(@ModelAttribute("filterCat") Book book) {
+        String categoryName = book.getCategory();
+        return "redirect:/catalog/"+categoryName;
     }
 
     @GetMapping(value = "/book/{id}")

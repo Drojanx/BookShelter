@@ -55,4 +55,10 @@ public class BookServiceImpl implements BookService {
         }
     }
 
+    @Override
+    public List<String> allCategories() {
+        List<String> strings = bookRepository.allCategories();
+        return strings;
+    }
+
 }

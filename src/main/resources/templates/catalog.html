@@ -12,12 +12,17 @@
                     <div class="col-lg-6 col-md-8 mx-auto">
                         <h1 class="fw-light">Album example</h1>
                         <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator, etc. Make it short and sweet, but not too short so folks don’t simply skip over it entirely.</p>
-                        <p>
-                            <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                            <a href="#" class="btn btn-secondary my-2">Secondary action</a>
-                        </p>
                     </div>
                 </div>
+
+                <form class="m-auto w-50" id="filter" th:action=@{/filter} method="get" th:object="${book}" modelAttribute="filterCat">
+                    <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example" th:field="*{category}">
+                        <option selected value="">Selecciona una categoría</option>
+                        <option th:each="category : ${categories}" th:value="${category}" th:text="${category}"></option>
+                    </select>
+                    <button class="btn btn-primary my-2" type="submit">Filtrar</button>
+                </form>
+
             </section>
 
             <div class="album py-5 bg-light">
@@ -48,7 +53,7 @@
                                         <table>
                                             <tr>
                                                 <td>
-                                                    <input id="input-3" name="input-3" th:value="${book.getAvgReview()}" class="rating" data-readonly="true" data-size="xm" data-show-caption="false" data-show-clear="false">
+                                                    <input id="input-3" name="input-3" th:value="${book.getAvgReview()}" class="rating" data-readonly="true" data-size="s" data-show-caption="false" data-show-clear="false">
                                                 </td>
                                             </tr>
                                         </table>

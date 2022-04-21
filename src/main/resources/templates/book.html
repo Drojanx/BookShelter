@@ -38,13 +38,15 @@
             <div class="bg-warning py-3" style="--bs-bg-opacity: .5;">
                 <h1 class="text-center text-black-50">Reseñas</h1>
                 <div class="w-50 m-auto my-2" th:each="review : ${reviews}">
-                    <div class="card shadow-sm">
-                        <div class="p-3 ps-4">
-                            <h4 class="card-text ms-3 mb-2" th:text="${review.user.username}"></h4>
-                            <div class="d-flex justify-content-between align-items-center ms-2">
-                                <input id="input-3" name="input-3" th:value="${review.stars}" class="rating" data-readonly="true" data-size="xm" data-show-caption="false" data-show-clear="false">
+                    <div th:if="${review.published}">
+                        <div class="card shadow-sm">
+                            <div class="p-3 ps-4">
+                                <h4 class="card-text ms-3 mb-2" th:text="${review.user.username}"></h4>
+                                <div class="d-flex justify-content-between align-items-center ms-2">
+                                    <input id="input-3" name="input-3" th:value="${review.stars}" class="rating" data-readonly="true" data-size="xm" data-show-caption="false" data-show-clear="false">
+                                </div>
+                                <h5 class="w-100 m-0 ms-3 mt-2" th:text="${review.comment}"></h5>
                             </div>
-                            <h5 class="w-100 m-0 ms-3 mt-2" th:text="${review.comment}"></h5>
                         </div>
                     </div>
                 </div>
