@@ -43,7 +43,8 @@ public class Book {
 
     @Override
     public String toString() {
-        return name + '-' + author;
+        return "------------------------------------------------------------"+ "\n"
+                +name + " - " + author;
     }
 
     @OneToMany(mappedBy = "book")

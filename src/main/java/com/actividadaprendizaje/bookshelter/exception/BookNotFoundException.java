@@ -7,6 +7,6 @@ public class BookNotFoundException extends Exception{
     }
 
     public BookNotFoundException() {
-        super();
+        super("Libro no encontrado");
     }
 }

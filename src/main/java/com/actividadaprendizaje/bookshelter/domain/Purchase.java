@@ -30,4 +30,12 @@ public class Purchase {
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
+
+    @Override
+    public String toString() {
+        return book.toString()+"\n"+
+                "Código de compra: " + id +"\n"+
+                "Precio: " + book.getPrice()+ "\n" +
+                "Fecha de compra: " + creationDate;
+    }
 }
