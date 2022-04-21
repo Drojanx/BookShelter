@@ -11,6 +11,23 @@
 <script th:src="@{/assets/bootstrapless-star-rating/star-rating.min.js}"></script>
 <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
 <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+<script th:src="@{assets/select2-develop/dist/js/select2.full.js}"></script>
+<script>
+    $("#birthplace").select2({
+        theme: "bootstrap4",
+        ajax: {
+            url: '/states',
+            dataType: 'json',
+            delay: 250,
+            processResults: function (response) {
+                return {
+                    results: response
+                };
+            },
+            cache: true
+        }
+    });
+</script>
 <script src="js/star-rating.js"></script>
 <script src="js/star-rating.min.js"></script>
 <script src="../assets/dist/js/bootstrap.bundle.min.js"></script>

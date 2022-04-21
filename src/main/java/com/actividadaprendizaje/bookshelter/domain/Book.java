@@ -33,9 +33,10 @@ public class Book {
         float sumReviews = 0;
         int numOfPublished = 0;
         for (Review review : reviews){
-            if(review.isPublished())
+            if(review.isPublished()){
                 numOfPublished++;
                 sumReviews += review.getStars();
+            }
         }
         return sumReviews/numOfPublished;
     }
