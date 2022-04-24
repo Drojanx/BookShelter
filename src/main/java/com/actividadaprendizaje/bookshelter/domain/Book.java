@@ -32,12 +32,16 @@ public class Book {
     public float getAvgReview(){
         float sumReviews = 0;
         int numOfPublished = 0;
-        for (Review review : reviews){
-            if(review.isPublished()){
-                numOfPublished++;
-                sumReviews += review.getStars();
+        if (reviews != null) {
+            for (Review review : reviews) {
+                if (review.isPublished()) {
+                    numOfPublished++;
+                    sumReviews += review.getStars();
+                }
             }
         }
+        if (sumReviews == 0 && numOfPublished == 0)
+            return 0;
         return sumReviews/numOfPublished;
     }
 

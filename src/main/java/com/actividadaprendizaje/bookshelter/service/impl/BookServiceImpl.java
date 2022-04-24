@@ -37,22 +37,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<Book> findByNameAndAuthorAndCategory(String name, String author, String category) {
-        List<Book> books = bookRepository.findByNameAndAuthorAndCategory(name, author, category);
-        return books;
-    }
-
-    @Override
     public void addBook(Book book) {
 
         bookRepository.save(book);
-    }
-
-    @Override
-    public void addBooks(Book... books) {
-        for (Book book : books) {
-            addBook(book);
-        }
     }
 
     @Override

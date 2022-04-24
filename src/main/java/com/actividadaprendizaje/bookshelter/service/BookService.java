@@ -11,10 +11,7 @@ public interface BookService {
     List<Book> findAllBooks();
     Book findBook(long id) throws BookNotFoundException;
     List<Book> findByCategory(String categoryName);
-    List<Book> findByNameAndAuthorAndCategory(String name, String author, String category);
 
     void addBook(Book book);
-    void addBooks(Book... books);
-
     List<String> allCategories();
 }

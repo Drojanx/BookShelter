@@ -15,10 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.TransactionSystemException;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -82,7 +80,7 @@ public class UserController {
         User remoteUser = userService.findByUsername(remoteUsername);
         boolean userModified = userService.modifyUser(remoteUser, formUser);
         if (!userModified){
-            throw new UserModificationException("Error al modificar el usuario");
+            throw new UserModificationException();
         }
         model.addAttribute("user", remoteUser);
         return "redirect:/profile";
@@ -105,19 +103,15 @@ public class UserController {
         return mav;
     }
 
-    @ExceptionHandler({ TransactionSystemException.class })
-    public ModelAndView handleConstraintViolationException(HttpServletRequest request, TransactionSystemException exception) {
+    @ExceptionHandler(UserModificationException.class)
+    public ModelAndView handleUserModificationException(HttpServletRequest request, UserModificationException exception) {
         logger.error("Error: " + exception.getMessage(), exception);
 
-        Throwable cause = ((TransactionSystemException) exception).getRootCause();
         ModelAndView mav = new ModelAndView();
-        if (cause instanceof ConstraintViolationException){
-            mav.addObject("message", "No se ha podido registrar el usuario. Por favor contacte con soporte técnico");
-            mav.addObject("exception", exception);
-            mav.addObject("url", request.getRequestURL());
-            mav.setViewName("error");
-            return mav;
-        }
+        mav.addObject("message", "No se ha podido modificar el usuario. Por favor contacte con soporte técnico");
+        mav.addObject("exception", exception);
+        mav.addObject("url", request.getRequestURL());
+        mav.setViewName("error");
         return mav;
     }
 

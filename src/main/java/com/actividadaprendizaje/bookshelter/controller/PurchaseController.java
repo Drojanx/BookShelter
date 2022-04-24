@@ -56,6 +56,14 @@ public class PurchaseController {
         return mav;
     }
 
+    @ExceptionHandler(BookNotFoundException.class)
+    public String handleException(Model model, HttpServletRequest request, BookNotFoundException pnfe) {
+        model.addAttribute("message", "Libro no encontrado");
+        model.addAttribute("exception", pnfe);
+        model.addAttribute("url", request.getRequestURL());
+        return "error";
+    }
+
     @ExceptionHandler
     public ModelAndView handleException(HttpServletRequest request, Exception exception) {
         logger.error("Error: " + exception.getMessage(), exception);

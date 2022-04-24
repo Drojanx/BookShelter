@@ -2,22 +2,17 @@ package com.actividadaprendizaje.bookshelter.controller;
 
 
 import com.actividadaprendizaje.bookshelter.domain.Book;
-import com.actividadaprendizaje.bookshelter.domain.Purchase;
 import com.actividadaprendizaje.bookshelter.domain.Review;
 import com.actividadaprendizaje.bookshelter.domain.User;
-import com.actividadaprendizaje.bookshelter.dto.ErrorResponse;
 import com.actividadaprendizaje.bookshelter.exception.BookNotFoundException;
 import com.actividadaprendizaje.bookshelter.service.BookService;
 import com.actividadaprendizaje.bookshelter.service.PurchaseService;
 import com.actividadaprendizaje.bookshelter.service.ReviewService;
 import com.actividadaprendizaje.bookshelter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
