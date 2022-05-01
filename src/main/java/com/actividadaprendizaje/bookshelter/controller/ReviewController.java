@@ -4,7 +4,6 @@ import com.actividadaprendizaje.bookshelter.domain.Book;
 import com.actividadaprendizaje.bookshelter.domain.Review;
 import com.actividadaprendizaje.bookshelter.domain.User;
 import com.actividadaprendizaje.bookshelter.exception.BookNotFoundException;
-import com.actividadaprendizaje.bookshelter.exception.BookPurchaseException;
 import com.actividadaprendizaje.bookshelter.exception.ReviewSaveException;
 import com.actividadaprendizaje.bookshelter.service.BookService;
 import com.actividadaprendizaje.bookshelter.service.ReviewService;
@@ -14,10 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -71,5 +67,21 @@ public class ReviewController {
         model.addAttribute("book", book);
         model.addAttribute("user", user);
         return "redirect:/rate-book/"+book.getId();
+    }
+
+    @ExceptionHandler(ReviewSaveException.class)
+    public String handleException(Model model, HttpServletRequest request, ReviewSaveException rse) {
+        model.addAttribute("message", "Fallo al guardar la review");
+        model.addAttribute("exception", rse);
+        model.addAttribute("url", request.getRequestURL());
+        return "error";
+    }
+
+    @ExceptionHandler(BookNotFoundException.class)
+    public String handleException(Model model, HttpServletRequest request, BookNotFoundException pnfe) {
+        model.addAttribute("message", "Libro no encontrado");
+        model.addAttribute("exception", pnfe);
+        model.addAttribute("url", request.getRequestURL());
+        return "error";
     }
 }

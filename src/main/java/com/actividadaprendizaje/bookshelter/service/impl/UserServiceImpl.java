@@ -2,6 +2,8 @@ package com.actividadaprendizaje.bookshelter.service.impl;
 
 import com.actividadaprendizaje.bookshelter.domain.Role;
 import com.actividadaprendizaje.bookshelter.domain.User;
+import com.actividadaprendizaje.bookshelter.exception.UserModificationException;
+import com.actividadaprendizaje.bookshelter.exception.UserRegistrationException;
 import com.actividadaprendizaje.bookshelter.repository.RoleRepository;
 import com.actividadaprendizaje.bookshelter.repository.UserRepository;
 import com.actividadaprendizaje.bookshelter.security.Constants;
@@ -25,7 +27,7 @@ public class UserServiceImpl implements UserService {
     private RoleRepository roleRepository;
 
     @Override
-    public boolean add(User user) {
+    public boolean add(User user) throws UserRegistrationException {
         try{
             BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
             user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -33,29 +35,26 @@ public class UserServiceImpl implements UserService {
             user.setActive(true);
             Role userRole = roleRepository.findByName(Constants.USER_ROLE);
             user.setRoles(new HashSet<>(Collections.singletonList(userRole)));
+            if(emailExists(user.getEmail()))
+                throw new UserRegistrationException("Email ya en uso");
+            if(usernameExists(user.getUsername()))
+                throw new UserRegistrationException("Username ya en uso");
             userRepository.save(user);
         } catch (DataIntegrityViolationException ex){
             return false;
         }
         return true;
-    }
-
-    @Override
-    public User findUser(long id) {
-        return userRepository.findById(id).get();
     }
 
     @Override
     public User findByUsername(String username) { return userRepository.findByUsername(username); }
 
     @Override
-    public boolean modifyUser(User user, User formUser) {
+    public boolean modifyUser(User user, User formUser) throws UserModificationException {
         try{
             user.setName(formUser.getName());
             user.setSurname(formUser.getSurname());
             user.setBirthDate(formUser.getBirthDate());
-            user.setEmail(formUser.getEmail());
-            user.setUsername(formUser.getUsername());
             userRepository.save(user);
 
         } catch (DataIntegrityViolationException ex){
@@ -63,4 +62,15 @@ public class UserServiceImpl implements UserService {
         }
         return true;
     }
+
+    @Override
+    public boolean usernameExists(String username) {
+        return userRepository.existsByUsername(username);
+    }
+
+    @Override
+    public boolean emailExists(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
 }
