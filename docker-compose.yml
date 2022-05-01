@@ -11,7 +11,7 @@ services:
       - MYSQL_DATABASE=appdb
       - MYSQL_ROOT_PASSWORD=secret
     volumes:
-      - dbvol:/var/lib/mysql
+      - .dbvol:/var/lib/mysql
     ports:
       - "3309:3306"
     restart: always

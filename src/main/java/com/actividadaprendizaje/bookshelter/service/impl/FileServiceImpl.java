@@ -24,22 +24,6 @@ import java.nio.file.StandardCopyOption;
 @Service
 public class FileServiceImpl implements FileService {
 
-    @Value("${images.upload.dir}")
-    public String uploadDir;
-
-    @Value("${pdf.download.dir}")
-    public String downloadDir;
-
-    @Override
-    public void uploadFile(MultipartFile file) {
-        try {
-            Path copyLocation = Paths
-                    .get(uploadDir + File.separator + StringUtils.cleanPath(file.getOriginalFilename()));
-            Files.copy(file.getInputStream(), copyLocation, StandardCopyOption.REPLACE_EXISTING);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     @Override
     public void downloadFile(HttpServletResponse response, String listPurchases) throws IOException {

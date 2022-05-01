@@ -29,6 +29,8 @@ public class Review {
     private LocalDate creationDate;
     @Column
     private boolean published;
+    @Column
+    private LocalDate publishedDate;
 
     @NotNull
     @ManyToOne

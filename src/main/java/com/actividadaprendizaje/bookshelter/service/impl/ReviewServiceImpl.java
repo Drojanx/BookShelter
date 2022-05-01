@@ -4,6 +4,8 @@ import com.actividadaprendizaje.bookshelter.domain.Book;
 import com.actividadaprendizaje.bookshelter.domain.Purchase;
 import com.actividadaprendizaje.bookshelter.domain.Review;
 import com.actividadaprendizaje.bookshelter.domain.User;
+import com.actividadaprendizaje.bookshelter.exception.BookNotFoundException;
+import com.actividadaprendizaje.bookshelter.exception.UserNotFoundException;
 import com.actividadaprendizaje.bookshelter.repository.PurchaseRepository;
 import com.actividadaprendizaje.bookshelter.repository.ReviewRepository;
 import com.actividadaprendizaje.bookshelter.service.ReviewService;
@@ -24,6 +26,9 @@ public class ReviewServiceImpl implements ReviewService {
     public boolean addReview(Review review) {
         try{
             review.setCreationDate(LocalDate.now());
+            if (review.isPublished()){
+                review.setPublishedDate(LocalDate.now());
+            }
             reviewRepository.save(review);
         } catch (DataIntegrityViolationException ex){
             return false;
@@ -37,6 +42,9 @@ public class ReviewServiceImpl implements ReviewService {
             review.setComment(formReview.getComment());
             review.setStars(formReview.getStars());
             review.setPublished(formReview.isPublished());
+            if (review.isPublished()){
+                review.setPublishedDate(LocalDate.now());
+            }
             reviewRepository.save(review);
         } catch (DataIntegrityViolationException ex){
             return false;
@@ -44,24 +52,10 @@ public class ReviewServiceImpl implements ReviewService {
         return true;
     }
 
-    @Override
-    public List<Review> findByUser(User user) {
-        return reviewRepository.findByUser(user);
-    }
 
     @Override
     public List<Review> findByBook(Book book) {
         return reviewRepository.findByBook(book);
-    }
-
-    @Override
-    public List<Review> findAllReviews() {
-        return null;
-    }
-
-    @Override
-    public List<Review> findPurchases(User user) {
-        return null;
     }
 
     @Override

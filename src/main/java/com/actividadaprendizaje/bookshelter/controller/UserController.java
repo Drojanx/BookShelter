@@ -10,7 +10,6 @@ import com.actividadaprendizaje.bookshelter.service.BookService;
 import com.actividadaprendizaje.bookshelter.service.PurchaseService;
 import com.actividadaprendizaje.bookshelter.service.UserService;
 import com.actividadaprendizaje.bookshelter.service.FileService;
-import org.hibernate.exception.ConstraintViolationException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,14 +61,12 @@ public class UserController {
     public String profile(Model model, HttpServletRequest request) {
         String remoteUsername = request.getRemoteUser();
         User remoteUser = userService.findByUsername(remoteUsername);
-        Review review = new Review();
         List<Purchase> purchaseList = purchaseService.findPurchases(remoteUser);
         List<Book> myBooks = new ArrayList<>();
         for(Purchase purchase : purchaseList){
             myBooks.add(purchase.getBook());
         }
         model.addAttribute("user", remoteUser);
-        model.addAttribute("review", review);
         model.addAttribute("myBooks", myBooks);
         return "profile";
     }
@@ -82,13 +79,9 @@ public class UserController {
         if (!userModified){
             throw new UserModificationException();
         }
+        remoteUser = userService.findByUsername(formUser.getUsername());
         model.addAttribute("user", remoteUser);
         return "redirect:/profile";
-    }
-
-    @GetMapping("/profile/orders")
-    public String getUserOrders(Model model, @PathVariable long userId) {
-        return "user-orders";
     }
 
     @ExceptionHandler(UserRegistrationException.class)
@@ -96,7 +89,7 @@ public class UserController {
         logger.error("Error: " + exception.getMessage(), exception);
 
         ModelAndView mav = new ModelAndView();
-        mav.addObject("message", "No se ha podido registrar el usuario. Por favor contacte con soporte técnico");
+        mav.addObject("message", exception.getMessage());
         mav.addObject("exception", exception);
         mav.addObject("url", request.getRequestURL());
         mav.setViewName("error");
@@ -115,16 +108,5 @@ public class UserController {
         return mav;
     }
 
-    @ExceptionHandler
-    public ModelAndView handleException(HttpServletRequest request, Exception exception) {
-        logger.error("Error: " + exception.getMessage(), exception);
-
-        ModelAndView mav = new ModelAndView();
-        mav.addObject("message", exception.getMessage());
-        mav.addObject("exception", exception);
-        mav.addObject("url", request.getRequestURL());
-        mav.setViewName("error");
-        return mav;
-    }
 }
 
