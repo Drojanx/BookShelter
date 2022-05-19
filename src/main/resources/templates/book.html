@@ -41,7 +41,8 @@
                     <div th:if="${review.published}">
                         <div class="card shadow-sm">
                             <div class="p-3 ps-4">
-                                <h4 class="card-text ms-3 mb-2" th:text="${review.user.username}"></h4>
+                                <p style="white-space: nowrap;" class="mb-0 fs-4">Publicado por <a style="white-space: nowrap; text-decoration: none; color: black;" class="card-text fw-bold fs-4" th:text="${review.user.username}"></a></p>
+                                <p class="card-text mb-1 fs-6" th:text="${review.publishedDate}"></p>
                                 <div class="d-flex justify-content-between align-items-center ms-2">
                                     <input id="input-3" name="input-3" th:value="${review.stars}" class="rating" data-readonly="true" data-size="xm" data-show-caption="false" data-show-clear="false">
                                 </div>

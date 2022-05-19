@@ -29,7 +29,7 @@ public class Review {
     private LocalDate creationDate;
     @Column
     private boolean published;
-    @Column
+    @Column(name = "published_date")
     private LocalDate publishedDate;
 
     @NotNull
