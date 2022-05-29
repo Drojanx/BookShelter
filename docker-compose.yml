@@ -34,15 +34,6 @@ services:
       - MYSQL_DATABASE=appdb
       - MYSQL_PORT=3306
 
-  bookshelter-dev:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: bookshelter-spring-dev
-    image: alanz/bookshelterdocker-dev:latest
-    ports:
-      - "8081:8080"
-
 networks:
   bookshelter-network:
     name: bookshelter-network
