@@ -18,8 +18,9 @@ services:
   bookshelter-app:
     build:
       context: .
-    container_name: bookshelter-spring
-    image: alanz/bookshelterdocker:latest
+      dockerfile: Production.Dockerfile
+    container_name: bookshelter-spring-pro
+    image: alanz/bookshelterdocker-pro:latest
     ports:
       - "8080:8080"
     networks:
@@ -32,6 +33,15 @@ services:
       - MYSQL_PASSWORD=bsPass
       - MYSQL_DATABASE=appdb
       - MYSQL_PORT=3306
+
+  bookshelter-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bookshelter-spring-dev
+    image: alanz/bookshelterdocker-dev:latest
+    ports:
+      - "8081:8080"
 
 networks:
   bookshelter-network:
