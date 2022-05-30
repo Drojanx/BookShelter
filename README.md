@@ -3,7 +3,7 @@
 Esisten varias ramas del proyecto:
 1. Develop: el proyecto base configurado para funcionar en local con una base de datos MySql.
 
-            Para crear la base de datos en Docker:
+      Para crear la base de datos en Docker:
 ```
 docker run -d -p 3306:3306 --name bookshelter-db -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=bookshelter -e MYSQL_USER=bsuser -e MYSQL_PASSWORD=100316 mysql
 ```
