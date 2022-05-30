@@ -17,5 +17,10 @@ docker run -d -p 8081:8081 -e "spring_profiles_active=dev" --name bs-dev alanz/b
 
 3. Lanzamos el entorno Pro por el puerto 8080:
 ```
-docker run -d -p 8080:8080 -e "spring_profiles_active=pro" --name bs-pro alanz/bsdocker:1.0
+docker run -d -p 8080:8080 -e "spring_profiles_active=pro" --name bs-pro alanz/bsdocker:1.0f
 ```
+
+La imagen creada con este Dockerfile fué pusheada a mi [repositorio](https://hub.docker.com/repository/docker/drojanx/alanz-repo/) 
+de dockerhub con el siguiente tag: **drojanx/alanz-repo:alanzbsdocker**
+
+
