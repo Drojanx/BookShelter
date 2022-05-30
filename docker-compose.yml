@@ -2,11 +2,13 @@ version: '3.7'
 services:
   bookshelterdb:
     container_name: bookshelterdb
-    image: mysql
+    image: mysql:8.0
+    networks:
+      - bookshelter-network
     environment:
-      - MYSQL_USER=bsuser
-      - MYSQL_PASSWORD=100316
-      - MYSQL_DATABASE=bsapi
+      - MYSQL_USER=bsUser
+      - MYSQL_PASSWORD=bsPass
+      - MYSQL_DATABASE=appdb
       - MYSQL_ROOT_PASSWORD=secret
     ports:
       - "3306:3306"
@@ -19,11 +21,16 @@ services:
     image: alanz/bookshelterdocker:latest
     ports:
       - "8080:8080"
+    networks:
+      - bookshelter-network
     depends_on:
       - bookshelterdb
     environment:
-      - MYSQL_HOST=localhost
-      - MYSQL_USERNAME=bsuser
-      - MYSQL_PASSWORD=100316
-      - MYSQL_DATABASE=bsapi
+      - MYSQL_HOST=bookshelterdb
+      - MYSQL_USERNAME=bsUser
+      - MYSQL_PASSWORD=bsPass
+      - MYSQL_DATABASE=appdb
       - MYSQL_PORT=3306
+networks:
+  bookshelter-network:
+    name: bookshelter-network
