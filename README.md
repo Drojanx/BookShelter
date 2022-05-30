@@ -3,3 +3,5 @@ Esta rama del proyecto es una version simple que funciona con la base de datos d
 
 Se crea una imagen docker de este proyecto para ser pusheada a mi repositorio de 
 dockerhub con el tag: [drojanx/alanz-repo:bs-docker-deploy](https://hub.docker.com/repository/docker/drojanx/alanz-repo)
+
+La App se desplegará usando esta imagen.
