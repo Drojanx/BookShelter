@@ -25,5 +25,5 @@ INSERT INTO books VALUES(4, 'Rajoy', 'Cocina', '2016-06-12', 'Heist', 22);
 INSERT INTO books VALUES(5, 'Chanel', 'Chanelazo', '2022-05-15', 'Tongo Eurovision', 100);
 ```
 2. Two-enviroments: en esta rama encontramos el proyecto configurado para poder funcionar en 2 entornos simultaneamente: uno Dev con una base de datos en memoria H2 y uno Pro con la base de datos desplegada en Azure (más en README de la rama en cuestión).
-3. Deploy-version: una version simple configurada para funcionar con la base de datos de Azure.
+3. Deploy-version: una version simple configurada para funcionar con la base de datos de Azure. Su imagen de docker se usará para desplegar.
 4. Docker-compose: contiene los ficheros Docker necesarios para ejecutar un docker-compose para lanzar conjuntamente la aplicación y la base de datos.
